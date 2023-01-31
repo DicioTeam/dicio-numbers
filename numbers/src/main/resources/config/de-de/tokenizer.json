@@ -6,7 +6,7 @@
     "raw"
   ],
   "plural_endings": [
-    "s"
+    "er"
   ],
   "word_matches": [
     {
@@ -14,9 +14,7 @@
         "ignore"
       ],
       "values": [
-        "a",
-        "an",
-        "and"
+        "und"
       ]
     },
     {
@@ -25,7 +23,7 @@
         "thousand_separator"
       ],
       "values": [
-        ","
+        "."
       ]
     },
     {
@@ -33,6 +31,9 @@
         "ordinal_suffix"
       ],
       "values": [
+        "ter",
+        "te",
+        "tes",
         "."
       ]
     },
@@ -42,6 +43,18 @@
       ],
       "values": [
         "punkt",
+        "komma",
+        ".",
+        ","
+      ]
+    },
+    { 
+      "categories": [
+        "point",
+        "ignore"
+      ],
+      "values": [
+        ",",
         "."
       ]
     },
@@ -50,7 +63,6 @@
         "fraction_separator"
       ],
       "values": [
-        "over",
         "geteilt",
         "/"
       ]
@@ -79,16 +91,7 @@
         "negative"
       ],
       "values": [
-        "minus"
-      ]
-    },
-    {
-      "categories": [
-        "sign",
-        "negative",
-        "ignore"
-      ],
-      "values": [
+        "minus",
         "-"
       ]
     },
@@ -341,6 +344,7 @@
       ],
       "values": {
         "halb": 0.5,
+        "halbe": 0.5,
         "viertel": 0.25,
         "paar": 2,
         "dutzend": 12,
@@ -372,54 +376,74 @@
       "Sekunde",
       "Sekunden",
       "s",
+      "Sek.",
+      "sec"
     ],
     "1 MINUTES": [
       "Minute",
       "Minuten",
-      "m",
-      "Min"
+      "min",
+      "Min.",
+      "m"
     ],
     "1 HOURS": [
       "Stunde",
       "Stunden",
-      "h"
+      "h",
+      "Std."
     ],
     "1 DAYS": [
       "Tag",
       "Tage"
-      "T"
+      "T.",
+      "d",
+      "Tg."
     ],
     "1 WEEKS": [
       "Woche",
       "Wochen",
-      "W"
+      "W.",
+      "Wo."
     ],
     "1 MONTHS": [
       "Monat",
       "Monate",
-      "Mon"
+      "Mon.",
+      "M.",
+      "Mt.",
+      "Mo."
     ],
     "1 YEARS": [
       "Jahr",
       "Jahre",
-      "J"
+      "J.",
+      "Jr.",
+      "y",
+      "a"
     ],
     "1 DECADES": [
       "Jahrzehnt",
       "Jahrzehnte",
-      "Decade",
-      "Decaden"
+      "Dekade",
+      "Dekaden"
     ],
     "1 CENTURIES": [
       "Jahrhundert",
-      "Jahrhunderte"
+      "Jahrhunderte",
+      "Jh.",
+      "Jhdt.",
+      "Jahrh."
     ],
     "1 MILLENNIA": [
-      "Millenium",
-      "Millenien",
       "Jahrtausend",
-      "Jahrtausende"
-      "Millenia"
+      "Jahrtausende",
+      "Millennium",
+      "Millennien",
+      "Jt.",
+      "Jtsd.",
+      "Jahrt.",
+      "Jhtsd.",
+      "Jhtsde."
     ]
   },
   "duration_restrict_after_number": [
@@ -429,9 +453,9 @@
     "s",
     "m",
     "h",
-    "d",
-    "w",
-    "mo",
-    "yr"
+    "T",
+    "W",
+    "M",
+    "J"
   ]
 }
