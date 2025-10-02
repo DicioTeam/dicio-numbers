@@ -3,14 +3,14 @@ package org.dicio.numbers.lang.de;
 import static org.dicio.numbers.test.TestUtils.F;
 import static org.dicio.numbers.test.TestUtils.T;
 
-import org.dicio.numbers.formatter.NumberFormatter;
+import org.dicio.numbers.formatter.Formatter;
 import org.dicio.numbers.test.NiceDurationTestBase;
 import org.junit.Test;
 
 public class NiceDurationTest extends NiceDurationTestBase {
 
     @Override
-    public NumberFormatter buildNumberFormatter() {
+    public Formatter buildNumberFormatter() {
         return new GermanFormatter();
     }
 

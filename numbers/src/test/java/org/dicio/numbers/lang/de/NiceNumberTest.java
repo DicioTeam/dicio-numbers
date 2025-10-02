@@ -1,6 +1,6 @@
 package org.dicio.numbers.lang.de;
 
-import org.dicio.numbers.NumberParserFormatter;
+import org.dicio.numbers.ParserFormatter;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -12,11 +12,11 @@ import static org.junit.Assert.assertEquals;
 
 public class NiceNumberTest {
 
-    private static NumberParserFormatter pf;
+    private static ParserFormatter pf;
 
     @BeforeClass
     public static void setup() {
-        pf = new NumberParserFormatter(new GermanFormatter(), null);
+        pf = new ParserFormatter(new GermanFormatter(), null);
     }
 
     @Test

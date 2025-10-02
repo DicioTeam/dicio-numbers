@@ -1,6 +1,6 @@
 package org.dicio.numbers.lang.de;
 
-import org.dicio.numbers.formatter.NumberFormatter;
+import org.dicio.numbers.formatter.Formatter;
 import org.dicio.numbers.test.DateTimeTestBase;
 import org.junit.Test;
 
@@ -17,7 +17,7 @@ public class DateTimeTest extends DateTimeTestBase {
     }
 
     @Override
-    public NumberFormatter buildNumberFormatter() {
+    public Formatter buildNumberFormatter() {
         return new GermanFormatter();
     }
 
