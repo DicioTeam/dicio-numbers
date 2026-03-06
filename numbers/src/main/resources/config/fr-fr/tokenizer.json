@@ -1,0 +1,868 @@
+{
+  "spaces": " \t\n\f\r:;_!?<>|=()[]{}»«*~^`'\"",
+  "characters_as_word": "%‰#-+.,/",
+  "raw_number_categories": [
+    "number",
+    "raw"
+  ],
+  "plural_endings": [
+    "s"
+  ],
+  "word_matches": [
+    {
+      "categories": [
+        "ignore",
+        "date_time_ignore"
+      ],
+      "values": [
+        "and"
+      ]
+    },
+    {
+      "categories": [
+        "ignore",
+        "date_time_ignore",
+        "day_adder_the",
+        "ampm_before",
+        "bcad_after"
+      ],
+      "values": [
+        "a"
+      ]
+    },
+    {
+      "categories": [
+        "ignore",
+        "date_time_ignore",
+        "day_adder_the"
+      ],
+      "values": [
+        "an"
+      ]
+    },
+    {
+      "categories": [
+        "ignore",
+        "date_time_ignore",
+        "thousand_separator"
+      ],
+      "values": [
+        ","
+      ]
+    },
+    {
+      "categories": [
+        "ordinal_suffix"
+      ],
+      "values": [
+        "ème",
+        "ième",
+        "e",
+      ]
+    },
+    {
+      "categories": [
+        "point"
+      ],
+      "values": [
+        "virgule"
+      ]
+    },
+    {
+      "categories": [
+        "point",
+        "post_oclock"
+      ],
+      "values": [
+        "point"
+      ]
+    },
+    {
+      "categories": [
+        "point",
+        "ignore",
+        "date_time_ignore"
+      ],
+      "values": [
+        "."
+      ]
+    },
+    {
+      "categories": [
+        "fraction_separator"
+      ],
+      "values": [
+        "sur",
+        "divisé par"
+      ]
+    },
+    {
+      "categories": [
+        "fraction_separator",
+        "date_time_ignore"
+      ],
+      "values": [
+        "/"
+      ]
+    },
+    {
+      "categories": [
+        "fraction_separator_secondary"
+      ],
+      "values": [
+        "divisé par"
+      ]
+    },
+    {
+      "categories": [
+        "sign",
+        "positive"
+      ],
+      "values": [
+        "positif",
+        "plus",
+        "+"
+      ]
+    },
+    {
+      "categories": [
+        "sign",
+        "negative"
+      ],
+      "values": [
+        "négatif",
+        "moins"
+      ]
+    },
+    {
+      "categories": [
+        "ignore",
+        "date_time_ignore",
+        "sign",
+        "negative"
+      ],
+      "values": [
+        "-"
+      ]
+    },
+    {
+      "categories": [
+        "duration_separator",
+        "date_time_ignore"
+      ],
+      "values": [
+        "de"
+      ]
+    },
+    {
+      "categories": [
+        "yesterday"
+      ],
+      "values": [
+        "hier"
+      ]
+    },
+    {
+      "categories": [
+        "today"
+      ],
+      "values": [
+        "aujourd'hui"
+      ]
+    },
+    {
+      "categories": [
+        "tomorrow"
+      ],
+      "values": [
+        "demain",
+      ]
+    },
+    {
+      "categories": [
+        "day_adder_the",
+        "date_time_ignore",
+        "pre_hour",
+        "pre_special_hour"
+      ],
+      "values": [
+        "the"
+      ]
+    },
+    {
+      "categories": [
+        "day_adder_day"
+      ],
+      "values": [
+        "jour"
+      ]
+    },
+    {
+      "categories": [
+        "pre_relative_indicator",
+        "post_relative_indicator",
+        "positive",
+        "day_adder_after",
+        "special_minute_after",
+        "pre_special_hour"
+      ],
+      "values": [
+        "après"
+      ]
+    },
+    {
+      "categories": [
+        "day_adder_before",
+        "special_minute_before",
+        "bcad_before",
+        "pre_relative_indicator",
+        "post_relative_indicator",
+        "negative",
+        "pre_special_hour"
+      ],
+      "values": [
+        "avant"
+      ]
+    },
+    {
+      "categories": [
+        "pre_hour"
+      ],
+      "values": [
+        "heure",
+        "heures"
+      ]
+    },
+    {
+      "categories": [
+        "pre_hour",
+        "pre_special_hour"
+      ],
+      "values": [
+        "at"
+      ]
+    },
+    {
+      "categories": [
+        "pre_special_hour"
+      ],
+      "values": [
+        "this",
+        "these",
+        "those",
+        "that"
+      ]
+    },
+    {
+      "categories": [
+        "pre_special_hour",
+        "pre_relative_indicator",
+        "positive",
+        "pre_oclock"
+      ],
+      "values": [
+        "on"
+      ]
+    },
+    {
+      "categories": [
+        "pre_relative_indicator",
+        "positive"
+      ],
+      "values": [
+        "next",
+        "coming",
+        "upcoming",
+        "successive",
+        "succeeding"
+      ]
+    },
+    {
+      "categories": [
+        "date_time_ignore",
+        "pre_relative_indicator",
+        "positive"
+      ],
+      "values": [
+        "in"
+      ]
+    },
+    {
+      "categories": [
+        "pre_relative_indicator",
+        "post_relative_indicator",
+        "positive"
+      ],
+      "values": [
+        "following"
+      ]
+    },
+    {
+      "categories": [
+        "post_relative_indicator",
+        "negative"
+      ],
+      "values": [
+        "ago"
+      ]
+    },
+    {
+      "categories": [
+        "pre_relative_indicator",
+        "negative"
+      ],
+      "values": [
+        "previous",
+        "last",
+        "preceding",
+        "passed"
+      ]
+    },
+    {
+      "categories": [
+        "bcad_before"
+      ],
+      "values": [
+        "b"
+      ]
+    },
+    {
+      "categories": [
+        "bcad_after"
+      ],
+      "values": [
+        "anno"
+      ]
+    },
+    {
+      "categories": [
+        "bcad_identifier"
+      ],
+      "values": [
+        "christ",
+        "domini",
+        "d"
+      ]
+    },
+    {
+      "categories": [
+        "bcad_identifier",
+        "bcad_after"
+      ],
+      "values": [
+        "c",
+        "common",
+        "current"
+      ]
+    },
+    {
+      "categories": [
+        "bcad_before_combined"
+      ],
+      "values": [
+        "av J.C",
+      ]
+    },
+    {
+      "categories": [
+        "bcad_after_combined"
+      ],
+      "values": [
+        "ap J.C",
+      ]
+    },
+    {
+      "categories": [
+        "bcad_identifier",
+        "bcad_era"
+      ],
+      "values": [
+        "era",
+        "e"
+      ]
+    },
+    {
+      "categories": [
+        "ampm_before"
+      ],
+      "values": [
+        "ante"
+      ]
+    },
+    {
+      "categories": [
+        "ampm_after"
+      ],
+      "values": [
+        "post",
+        "p"
+      ]
+    },
+    {
+      "categories": [
+        "ampm_identifier"
+      ],
+      "values": [
+        "meridiem",
+        "meridian",
+        "m"
+      ]
+    },
+    {
+      "categories": [
+        "ampm_before_combined"
+      ],
+      "values": [
+        "am"
+      ]
+    },
+    {
+      "categories": [
+        "ampm_after_combined"
+      ],
+      "values": [
+        "pm"
+      ]
+    },
+    {
+      "categories": [
+        "post_oclock"
+      ],
+      "values": [
+        "clock"
+      ]
+    },
+    {
+      "categories": [
+        "oclock_combined"
+      ],
+      "values": [
+        "oclock",
+        "exact",
+        "sharp"
+      ]
+    }
+  ],
+  "number_mappings": [
+    {
+      "categories": [
+        "number",
+        "digit",
+        "digit_after_point"
+      ],
+      "values": {
+        "zéro": 0,
+        "un": 1,
+        "deux": 2,
+        "trois": 3,
+        "quatre": 4,
+        "cinq": 5,
+        "six": 6,
+        "sept": 7,
+        "huit": 8,
+        "neuf": 9
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "digit_after_point"
+      ],
+      "values": {
+        "zéro": 0
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "digit_after_point",
+        "pre_oclock"
+      ],
+      "values": {
+        "zéro": 0
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "teen"
+      ],
+      "values": {
+        "dix": 10,
+        "onze": 11,
+        "douze": 12,
+        "treize": 13,
+        "quatorze": 14,
+        "quinze": 15,
+        "seize": 16,
+        "dix-sept": 17,
+        "dix-huit": 18,
+        "dix-neuf": 19
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "tens"
+      ],
+      "values": {
+        "vingt": 20,
+        "trente": 30,
+        "quarante": 40,
+        "cinquante": 50,
+        "soixante": 60,
+        "soixante-dix" :70,
+		"soixante-et-onze": 71,
+		"soixante-douze": 72,
+		"soixante-treize": 73,
+		"soixante-quatorze": 74,
+		"soixante-quinze": 75,
+		"soixante-seize": 76,
+		"soixante-dix-sept": 77,
+		"soixante-dix-huit": 78,
+		"soixante-dix-neuf": 79,
+		"quatre-vingt": 80,
+		"quatre-vingt-dix": 90,
+		"quatre-vingt-onze": 91,
+		"quatre-vingt-douze": 92,
+		"quatre-vingt-treize": 93,
+		"quatre-vingt-quatorze": 94,
+		"quatre-vingt-quinze": 95,
+		"quatre-vingt-seize": 96,
+		"quatre-vingt-dix-sept": 97,
+		"quatre-vingt-dix-huit": 98,
+		"quatre-vingt-dix-neuf": 99
+        }
+    },
+    {
+      "categories": [
+        "number",
+        "hundred"
+      ],
+      "values": {
+        "cent": 100
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "multiplier"
+      ],
+      "values": {
+        "mille": 1000,
+        "million": 1000000,
+        "milliard": 1000000000,
+        "billion": 1000000000000,
+        "billiard": 1000000000000000,
+        "trillion": 1000000000000000000
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "digit"
+      ],
+      "values": {
+        "premier": 1,
+		"second": 2,
+        "deuxième": 2,
+		"troisième": 3,
+        "quatrième": 4,
+        "cinquième": 5,
+        "sixième": 6,
+        "septième": 7,
+        "huitième": 8,
+        "neuvième": 9
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "teen"
+      ],
+      "values": {
+        "dixième": 10,
+        "onzième": 11,
+        "douzième": 12,
+        "treizième": 13,
+        "quatorzième": 14,
+        "quinzième": 15,
+        "seizième": 16,
+        "dix-septième": 17,
+        "dix-huitième": 18,
+        "dix-neuvième": 19
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "tens"
+      ],
+      "values": {
+        "vingtième": 20,
+        "trentième": 30,
+        "quarantième": 40,
+        "cinquantième": 50,
+        "soixantième": 60,
+        "soixante-dixième": 70,
+		"soixante-et-onzième": 71,
+		"soixante-douzième": 72,
+		"soixante-treizième": 73,
+		"soixante-quatorzième": 74,
+		"soixante-quinzième": 75,
+		"soixante-seizième": 76,
+		"soixante-dix-septième": 77,
+		"soixante-dix-huitième": 78,
+		"soixante-dix-neuvième": 79,
+        "quatre-vingtième": 80,
+		"quatre-vingt-unième": 81,
+		"quatre-vingt-deuxième": 82,
+		"quatre-vingt-troisième": 83,
+		"quatre-vingt-quatrième": 84,
+		"quatre-vingt-cinquième": 85,
+		"quatre-vingt-sixième": 86,
+		"quatre-vingt-septième": 87,
+		"quatre-vingt-huitième": 88,
+		"quatre-vingt-neuvième": 89,
+        "quatre-vingt-dizième": 90,
+		"quatre-vingt-onzième": 91,
+		"quatre-vingt-douzième": 92,
+		"quatre-vingt-treizième": 93,
+		"quatre-vingt-quatorzième": 94,
+		"quatre-vingt-quinzième": 95,
+		"quatre-vingt-seizème": 96,
+		"quatre-vingt-dix-septième": 97,
+		"quatre-vingt-dix-huitième": 98,
+		"quatre-vingt-dix-neuvième": 99,
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "hundred"
+      ],
+      "values": {
+        "centième": 100
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "multiplier"
+      ],
+      "values": {
+        "millième": 1000,
+        "millionième": 1000000,
+        "milliardième": 1000000000,
+        "billionième": 1000000000000,
+        "billiardième": 1000000000000000,
+        "trillionième": 1000000000000000000
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "suffix_multiplier"
+      ],
+      "values": {
+        "half": 0.5,
+        "halves": 0.5,
+        "quarter": 0.25,
+        "quarters": 0.25,
+        "pair": 2,
+        "pairs": 2,
+        "couple": 2,
+        "couples": 2,
+        "dozen": 12,
+        "dozens": 12,
+        "gross": 144,
+        "grosses": 144,
+        "score": 20,
+        "scores": 20,
+        "percent": 0.01,
+        "pct": 0.01,
+        "pc": 0.01,
+        "%": 0.01,
+        "permille": 0.001,
+        "permill": 0.001,
+        "permil": 0.001,
+        "‰": 0.001
+      }
+    },
+    {
+      "categories": [
+        "month_name"
+      ],
+      "values": {
+        "january": 1,
+        "jan": 1,
+        "february": 2,
+        "feb": 2,
+        "march": 3,
+        "mar": 3,
+        "april": 4,
+        "apr": 4,
+        "may": 5,
+        "june": 6,
+        "jun": 6,
+        "july": 7,
+        "jul": 7,
+        "august": 8,
+        "aug": 8,
+        "september": 9,
+        "sep": 9,
+        "sept": 9,
+        "october": 10,
+        "oct": 10,
+        "november": 11,
+        "nov": 11,
+        "december": 12,
+        "dec": 12
+      }
+    },
+    {
+      "categories": [
+        "day_of_week"
+      ],
+      "values": {
+        "monday": 0,
+        "mon": 0,
+        "tuesday": 1,
+        "tue": 1,
+        "wednesday": 2,
+        "wed": 2,
+        "thursday": 3,
+        "thu": 3,
+        "friday": 4,
+        "fri": 4,
+        "saturday": 5,
+        "sat": 5,
+        "sunday": 6,
+        "sun": 6
+      }
+    },
+    {
+      "categories": [
+        "noon_midnight_like",
+        "moment_of_day"
+      ],
+      "values": {
+        "midi": 12,
+        "midis": 12,
+        "minuit": 0,
+      }
+    },
+    {
+      "categories": [
+        "moment_of_day"
+      ],
+      "values": {
+        "night": 3,
+        "nights": 3,
+        "nighttime": 3,
+        "dawn": 6,
+        "dawning": 6,
+        "aurora": 6,
+        "morning": 9,
+        "mornings": 9,
+        "lunch": 12,
+        "lunches": 12,
+        "dinner": 20,
+        "dinners": 20,
+        "afternoon": 15,
+        "afternoons": 15,
+        "sunset": 18,
+        "dusk": 18,
+        "evening": 21,
+        "evenings": 21,
+        "tonight": 23
+      }
+    }
+  ],
+  "duration_words": {
+    "1 NANOS": [
+      "nanoseconde",
+      "nanosecondes",
+      "ns"
+    ],
+    "1 MICROS": [
+      "microseconde",
+      "microsecondes",
+      "μs"
+    ],
+    "1 MILLIS": [
+      "milliseconde",
+      "millisecondes",
+      "ms"
+    ],
+    "1 SECONDS": [
+      "seconde",
+      "secondes",
+      "s",
+      "sec",
+      "secs"
+    ],
+    "1 MINUTES": [
+      "minute",
+      "minutes",
+      "m",
+      "min",
+      "mins"
+    ],
+    "1 HOURS": [
+      "heure",
+      "heures",
+      "h",
+	]
+    "1 DAYS": [
+      "jour",
+      "jours",
+      "Jour"
+    ],
+    "1 WEEKS": [
+      "semaine",
+      "semaines",
+      "Semaines"
+    ],
+    "1 MONTHS": [
+      "mois",
+	  "Mois"
+    ],
+    "1 YEARS": [
+      "année",
+      "années",
+	  "Années",
+      "an",
+      "ans"
+    ],
+    "1 DECADES": [
+      "décennie",
+      "décennies"
+    ],
+    "1 CENTURIES": [
+      "siècle",
+      "siècles"
+    ],
+    "1 MILLENNIA": [
+      "millénaire",
+      "millénaires",
+    ]
+  },
+  "duration_restrict_after_number": [
+    "ns",
+    "μs",
+    "ms",
+    "s",
+    "m",
+    "h",
+    "Jour",
+    "Semaine",
+    "Mois",
+    "Année"
+  ]
+}
