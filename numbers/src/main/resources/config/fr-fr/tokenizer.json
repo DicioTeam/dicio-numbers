@@ -1,0 +1,393 @@
+{
+  "spaces": " \t\n\f\r:;_!?<>|=()[]{}»«*~^`'\"",
+  "characters_as_word": "%‰#-+.,/",
+  "raw_number_categories": [
+    "number",
+    "raw"
+  ],
+  "plural_endings": [
+    "s"
+  ],
+  "word_matches": [
+    {
+      "categories": [
+        "ignore"
+      ],
+      "values": [
+        "et"
+      ]
+    },
+    {
+      "categories": [
+        "ignore",
+        "thousand_separator"
+      ],
+      "values": [
+        " ",
+        "-"
+      ]
+    },
+    {
+      "categories": [
+        "ordinal_suffix"
+      ],
+      "values": [
+        "er",
+        "ier",
+        "ième"
+      ]
+    },
+    {
+      "categories": [
+        "point"
+      ],
+      "values": [
+        "point",
+        "."
+      ]
+    },
+    {
+      "categories": [
+        "fraction_separator"
+      ],
+      "values": [
+        "sur",
+        "divisé",
+        "/"
+      ]
+    },
+    {
+      "categories": [
+        "fraction_separator_secondary"
+      ],
+      "values": [
+        "par"
+      ]
+    },
+    {
+      "categories": [
+        "sign",
+        "positive"
+      ],
+      "values": [
+        "positif",
+        "plus",
+        "+"
+      ]
+    },
+    {
+      "categories": [
+        "sign",
+        "negative"
+      ],
+      "values": [
+        "négatif",
+        "moins"
+      ]
+    },
+    {
+      "categories": [
+        "sign",
+        "negative",
+        "ignore"
+      ],
+      "values": [
+        "-"
+      ]
+    },
+    {
+      "categories": [
+        "duration_separator"
+      ],
+      "values": [
+        "d'"
+      ]
+    }
+  ],
+  "number_mappings": [
+    {
+      "categories": [
+        "number",
+        "digit",
+        "digit_after_point"
+      ],
+      "values": {
+        "zéro": 0,
+        "nul": 0,
+        "un": 1,
+        "deux": 2,
+        "trois": 3,
+        "quatre": 4,
+        "cinq": 5,
+        "six": 6,
+        "sept": 7,
+        "huit": 8,
+        "neuf": 9
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "digit_after_point"
+      ],
+      "values": {
+        "zéro": 0
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "teen"
+      ],
+      "values": {
+        "dix": 10,
+        "onze": 11,
+        "douze": 12,
+        "treize": 13,
+        "quatorze": 14,
+        "quinze": 15,
+        "seize": 16,
+        "dix-sept": 17,
+        "dix-huit": 18,
+        "dix-neuf": 19
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "tens"
+      ],
+      "values": {
+        "vingt": 20,
+        "trente": 30,
+        "quarante": 40,
+        "cinquante": 50,
+        "soixante": 60,
+        "soixante-dix": 70,
+        "quatre-vingts": 80,
+        "quatre-vingts-dix": 90
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "hundred"
+      ],
+      "values": {
+        "cent": 100
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "multiplier"
+      ],
+      "values": {
+        "mille": 1000,
+        "million": 1000000,
+        "milliard": 1000000000,
+        "billiard": 1000000000000,
+        "triliard": 1000000000000000,
+        "quadrilliard": 1000000000000000000
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "digit"
+      ],
+      "values": {
+        "premier": 1,
+        "deuxième": 2,
+        "troisème": 3,
+        "quatrième": 4,
+        "cinqième": 5,
+        "sixième": 6,
+        "septième": 7,
+        "huitième": 8,
+        "neuvième": 9
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "teen"
+      ],
+      "values": {
+        "dixième": 10,
+        "onzeième": 11,
+        "douzième": 12,
+        "treizième": 13,
+        "quatorzième": 14,
+        "quinzième": 15,
+        "seizième": 16,
+        "dix-septième": 17,
+        "dix-huitième": 18,
+        "dix-neuvième": 19
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "tens"
+      ],
+      "values": {
+        "vingième": 20,
+        "trentième": 30,
+        "quarantième": 40,
+        "cinquantième": 50,
+        "soixantième": 60,
+        "soixante-dixième": 70,
+        "quatre-vingtième": 80,
+        "quatre-vingt-dixième": 90
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "hundred"
+      ],
+      "values": {
+        "centième": 100
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "ordinal",
+        "multiplier"
+      ],
+      "values": {
+        "millième": 1000,
+        "millionième": 1000000,
+        "milliardième": 1000000000,
+        "billiardième": 1000000000000,
+        "triliardième": 1000000000000000,
+        "quadrilliardième": 1000000000000000000
+      }
+    },
+    {
+      "categories": [
+        "number",
+        "suffix_multiplier"
+      ],
+      "values": {
+        "moitié": 0.5,
+        "moitiés": 0.5,
+        "quart": 0.25,
+        "quarts": 0.25,
+        "paire": 2,
+        "paires": 2,
+        "lustre": 5,
+        "lustres": 5,
+        "douzaines": 12,
+        "douzaine": 12,
+        "pourcent": 0.01,
+        "point": 0.01,
+        "%": 0.01,
+        "pour mille": 0.001,
+        "par mille": 0.001,
+        "par millier": 0.001,
+        "‰": 0.001
+      }
+    }
+  ],
+  "duration_words": {
+    "1 NANOS": [
+      "nanoseconde",
+      "nanosecondes",
+      "ns"
+    ],
+    "1 MICROS": [
+      "microseconde",
+      "microsecondes",
+      "μs"
+    ],
+    "1 MILLIS": [
+      "milliseconde",
+      "millisecondes",
+      "ms"
+    ],
+    "1 SECONDS": [
+      "seconde",
+      "secondes",
+      "s",
+      "sec",
+      "secs"
+    ],
+    "1 MINUTES": [
+      "minute",
+      "minutes",
+      "m",
+      "min",
+      "mins"
+    ],
+    "1 HOURS": [
+      "heure",
+      "heures",
+      "h",
+      "hr",
+      "hrs"
+    ],
+    "1 DAYS": [
+      "jour",
+      "jours",
+      "journée",
+      "journées",
+      "j"
+    ],
+    "1 WEEKS": [
+      "semaine",
+      "semaines",
+      "S",
+      "w"
+    ],
+    "1 MONTHS": [
+      "mois",
+      "M"
+    ],
+    "1 YEARS": [
+      "an",
+      "ans",
+      "année",
+      "années",
+      "a",
+      "A"
+    ],
+    "1 DECADES": [
+      "décennie",
+      "décennies",
+      "décade",
+      "décades"
+    ],
+    "1 CENTURIES": [
+      "siècle",
+      "siècles"
+    ],
+    "1 MILLENNIA": [
+      "millénaire",
+      "millénaires"
+    ]
+  },
+  "duration_restrict_after_number": [
+    "ns",
+    "μs",
+    "ms",
+    "s",
+    "m",
+    "h",
+    "d",
+    "w",
+    "mo",
+    "a",
+    "j",
+    "M",
+    "w",
+    "S",
+    "A"
+  ]
+}
