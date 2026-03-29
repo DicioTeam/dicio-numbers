@@ -45,6 +45,10 @@ class ExtractDateTimeParams(parser: Parser, utterance: String) :
         return this
     }
 
+    fun get(): LocalDateTime? {
+        return parseFirst()
+    }
+
     override fun getExtractorAtCurrentPosition(tokenStream: TokenStream): () -> LocalDateTime? {
         return parser.extractDateTime(tokenStream, shortScale, preferMonthBeforeDay, now)
     }

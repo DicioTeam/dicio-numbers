@@ -22,6 +22,10 @@ class ExtractDurationParams(parser: Parser, utterance: String) :
         return this
     }
 
+    fun get(): Duration? {
+        return parseFirst()
+    }
+
     override fun getExtractorAtCurrentPosition(tokenStream: TokenStream): () -> Duration? {
         return parser.extractDuration(tokenStream, shortScale)
     }

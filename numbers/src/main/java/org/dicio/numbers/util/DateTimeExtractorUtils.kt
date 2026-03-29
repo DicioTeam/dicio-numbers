@@ -111,6 +111,24 @@ class DateTimeExtractorUtils(
         }
     }
 
+    fun relativeYesterday(): Int? {
+        if (ts[0].hasCategory("yesterday")) {
+            ts.movePositionForwardBy(1)
+            return -1
+        } else {
+            return null
+        }
+    }
+
+    fun relativeTomorrow(): Int? {
+        if (ts[0].hasCategory("tomorrow")) {
+            ts.movePositionForwardBy(1)
+            return 1
+        } else {
+            return null
+        }
+    }
+
     fun relativeDayOfWeekDuration(): Int? {
         return relativeIndicatorDuration({
             var number = extractIntegerInRange(1, Int.MAX_VALUE)
