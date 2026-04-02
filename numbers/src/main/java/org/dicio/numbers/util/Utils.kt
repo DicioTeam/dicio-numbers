@@ -120,7 +120,13 @@ object Utils {
      */
     @JvmStatic
     fun containsCodePoint(s: String, codePoint: Int): Boolean {
-        return s.codePoints().anyMatch { it == codePoint }
+        var i = 0
+        while (i < s.length) {
+            val cp = Character.codePointAt(s, i)
+            if (cp == codePoint) return true
+            i += Character.charCount(cp)
+        }
+        return false
     }
 
     /**
