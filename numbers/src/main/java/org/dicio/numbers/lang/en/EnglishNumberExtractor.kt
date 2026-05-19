@@ -2,6 +2,7 @@ package org.dicio.numbers.lang.en
 
 import org.dicio.numbers.parser.lexer.TokenStream
 import org.dicio.numbers.unit.Number
+import org.dicio.numbers.unit.isNullOrZero
 import org.dicio.numbers.util.NumberExtractorUtils
 
 class EnglishNumberExtractor internal constructor(
@@ -209,9 +210,7 @@ class EnglishNumberExtractor internal constructor(
             }
 
             val denominator = numberInteger(false)
-            if (denominator == null || (denominator.isInteger && denominator.integerValue() == 0L)
-                || (denominator.isDecimal && denominator.decimalValue() == 0.0)
-            ) {
+            if (denominator.isNullOrZero()) {
                 ts.position = originalPosition // not a fraction or division by zero, reset
             } else {
                 return n.divide(denominator)

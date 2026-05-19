@@ -1,6 +1,8 @@
 package org.dicio.numbers.unit
 
 import java.util.Objects
+import kotlin.contracts.ExperimentalContracts
+import kotlin.contracts.contract
 
 /**
  * TODO add documentation
@@ -30,6 +32,9 @@ class Number private constructor(
 
     val isInteger: Boolean
         get() = !isDecimal
+
+    val isZero: Boolean
+        get() = (isDecimal && decimalValue == 0.0) || (!isDecimal && integerValue == 0L)
 
     fun integerValue(): Long {
         return integerValue
@@ -164,4 +169,12 @@ class Number private constructor(
             }
         }
     }
+}
+
+@OptIn(ExperimentalContracts::class)
+fun Number?.isNullOrZero(): Boolean {
+    contract {
+        returns(false) implies (this@isNullOrZero != null)
+    }
+    return this == null || this.isZero
 }

@@ -3,6 +3,8 @@ package org.dicio.numbers
 import org.dicio.numbers.formatter.Formatter
 import org.dicio.numbers.lang.en.EnglishFormatter
 import org.dicio.numbers.lang.en.EnglishParser
+import org.dicio.numbers.lang.es.SpanishFormatter
+import org.dicio.numbers.lang.es.SpanishParser
 import org.dicio.numbers.lang.it.ItalianFormatter
 import org.dicio.numbers.lang.it.ItalianParser
 import org.dicio.numbers.parser.Parser
@@ -12,6 +14,7 @@ object ParserFormatterBuilder {
     private val PARSER_FORMATTER_CLASSES_MAP = mapOf(
         "en" to ParserFormatterClasses(EnglishFormatter::class.java, EnglishParser::class.java),
         "it" to ParserFormatterClasses(ItalianFormatter::class.java, ItalianParser::class.java),
+        "es" to ParserFormatterClasses(SpanishFormatter::class.java, SpanishParser::class.java),
     )
 
     @JvmStatic
