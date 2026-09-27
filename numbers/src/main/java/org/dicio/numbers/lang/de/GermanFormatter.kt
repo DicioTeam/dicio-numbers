@@ -1,74 +1,42 @@
 package org.dicio.numbers.lang.de
 
 import org.dicio.numbers.formatter.Formatter
-import org.dicio.numbers.lang.en.EnglishFormatter
 import org.dicio.numbers.unit.MixedFraction
 import org.dicio.numbers.util.Utils.decimalPlacesNoFinalZeros
-import org.dicio.numbers.util.Utils.longPow
 import org.dicio.numbers.util.Utils.splitByModulus
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 import kotlin.math.abs
 
+/**
+ * German spells numbers below one million as a single word with the units before the tens, e.g.
+ * 243 = "zweihundertdreiundvierzig", while Million, Milliarde, ... are separate nouns. German
+ * always uses the long scale, so the shortScale parameter is ignored.
+ */
 class GermanFormatter : Formatter("config/de-de") {
     override fun niceNumber(mixedFraction: MixedFraction, speech: Boolean): String {
-        if (speech) {
-            val sign = if (mixedFraction.negative) "minus " else ""
-            if (mixedFraction.numerator == 0) {
-                return sign + pronounceNumber(mixedFraction.whole.toDouble(), 0, shortScale = true,
-                                              scientific = false,
-                                              ordinal = false
-                )
-            }
-
-            val denominatorString: String?
-            if (mixedFraction.denominator == 1) {
-                denominatorString = "Eintel"
-            } else if (mixedFraction.denominator == 2) {
-                denominatorString = "Halbe"
-            } else if (mixedFraction.denominator == 3) {
-                denominatorString = "Drittel"
-            } else if (mixedFraction.denominator == 7) {
-                denominatorString = "Siebtel"
-            } else if (mixedFraction.denominator < 20) {
-                // below 20 use number name + suffix "tel"
-                denominatorString = pronounceNumber(
-                    mixedFraction.denominator.toDouble(),
-                    0,
-                    shortScale = true,
-                    scientific = false,
-                    ordinal = true
-                ) + "tel"
-            } else {
-                // for 20+ use number name + suffix "stel"
-                denominatorString = pronounceNumber(
-                    mixedFraction.denominator.toDouble(),
-                    0,
-                    shortScale = true,
-                    scientific = false,
-                    ordinal = true
-                ) + "stel"
-            }
-            val numeratorString = pronounceNumber(mixedFraction.numerator.toDouble(), 0,
-                                                  shortScale = true,
-                                                  scientific = false,
-                                                  ordinal = false
-            )
-
-            return if (mixedFraction.whole == 0L) {
-                "$sign$numeratorString $denominatorString"
-            } else {
-                (sign + pronounceNumber(
-                    mixedFraction.whole.toDouble(),
-                    0,
-                    shortScale = true,
-                    scientific = false,
-                    ordinal = false
-                ) + " und " + numeratorString + " " + denominatorString)
-            }
-        } else {
+        if (!speech) {
             return niceNumberNotSpeech(mixedFraction)
+        }
+
+        val sign = if (mixedFraction.negative) "minus " else ""
+        if (mixedFraction.numerator == 0) {
+            return sign + cardinal(mixedFraction.whole, true)
+        }
+
+        val fraction = if (mixedFraction.numerator == 1 && mixedFraction.denominator == 2) {
+            "einhalb"
+        } else {
+            (if (mixedFraction.numerator == 1) "ein" else cardinal(mixedFraction.numerator.toLong(), true)) +
+                    " " + denominatorName(mixedFraction.denominator.toLong())
+        }
+
+        return if (mixedFraction.whole == 0L) {
+            sign + fraction
+        } else {
+            sign + cardinal(mixedFraction.whole, true) + " und " + fraction
         }
     }
 
@@ -79,10 +47,9 @@ class GermanFormatter : Formatter("config/de-de") {
         scientific: Boolean,
         ordinal: Boolean
     ): String {
-        var number = number
         if (number == Double.POSITIVE_INFINITY) {
             return "unendlich"
-        } else if (number == Double.Companion.NEGATIVE_INFINITY) {
+        } else if (number == Double.NEGATIVE_INFINITY) {
             return "minus unendlich"
         } else if (number.isNaN()) {
             return "keine Zahl"
@@ -93,167 +60,50 @@ class GermanFormatter : Formatter("config/de-de") {
         // number, since e.g. 999.99 * 10^18 can be pronounced correctly.
         if (scientific || abs(number) > 999999999999999934463.0) {
             val scientificFormatted = String.format(Locale.ENGLISH, "%E", number)
-            val parts: Array<String?> =
-                scientificFormatted.split("E".toRegex(), limit = 2).toTypedArray()
-            val power = parts[1]!!.toInt().toDouble()
+            val parts = scientificFormatted.split("E".toRegex(), limit = 2).toTypedArray()
+            val power = parts[1].toInt().toDouble()
 
             if (power != 0.0) {
                 // This handles negatives of powers separately from the normal
                 // handling since each call disables the scientific flag
-                val n = parts[0]!!.toDouble()
+                val n = parts[0].toDouble()
                 return String.format(
-                    "%s mal zehn hoch %s",
-                    pronounceNumber(abs(n), places, shortScale,
-                                    scientific = false,
-                                    ordinal = false
-                    ),
-                    pronounceNumber(abs(power), places, shortScale,
-                                    scientific = false,
-                                    ordinal = false
-                    )
+                    "%s%s mal zehn hoch %s%s",
+                    if (n < 0) "minus " else "",
+                    pronounceNumber(abs(n), places, shortScale, scientific = false, ordinal = false),
+                    if (power < 0) "minus " else "",
+                    pronounceNumber(abs(power), places, shortScale, scientific = false, ordinal = false)
                 )
             }
         }
 
         val result = StringBuilder()
+        var positive = number
         if (number < 0) {
-            number = -number
-            // from here on number is always positive
-            if (places != 0 || number >= 0.5) {
+            positive = -number
+            if (places != 0 || positive >= 0.5) {
                 // do not add minus if number will be rounded to 0
-                result.append(if (scientific) "negative " else "minus ")
+                result.append("minus ")
             }
         }
 
-        val realPlaces = decimalPlacesNoFinalZeros(number, places)
+        val realPlaces = decimalPlacesNoFinalZeros(positive, places)
         val numberIsWhole = realPlaces == 0
         // if no decimal places to be printed, numberLong should be the rounded number
-        val numberLong = number.toLong() + (if (number % 1 >= 0.5 && numberIsWhole) 1 else 0)
+        val numberLong = positive.toLong() + (if (positive % 1 >= 0.5 && numberIsWhole) 1 else 0)
 
-        if (!ordinal && numberIsWhole && numberLong > 1000 && numberLong < 2000) {
-            // deal with 4 digits that can be said like a date, i.e. 1972 => nineteen seventy two
-
-            result.append(NUMBER_NAMES[numberLong / 100])
-            result.append(" ")
-            if (numberLong % 100 == 0L) {
-                // 1900 => nineteen hundred
-                result.append(NUMBER_NAMES[100L])
-            } else if (numberLong % 100 < 10 && numberLong % 100 != 0L) {
-                // 1906 => nineteen oh six
-                result.append("oh ")
-                result.append(NUMBER_NAMES[numberLong % 10])
-            } else if (numberLong % 10 == 0L || numberLong % 100 < 20) {
-                // 1960 => nineteen sixty; 1911 => nineteen eleven
-                result.append(NUMBER_NAMES[numberLong % 100])
-            } else {
-                // 1961 => nineteen sixty one
-                result.append(NUMBER_NAMES[numberLong % 100 - numberLong % 10])
-                result.append(" ")
-                result.append(NUMBER_NAMES[numberLong % 10])
-            }
-
-            return result.toString()
-        }
-
-        if (!ordinal && NUMBER_NAMES.containsKey(numberLong)) {
-            if (number > 90) {
-                result.append("one ")
-            }
-            result.append(NUMBER_NAMES[numberLong])
-        } else if (shortScale) {
-            var ordi = ordinal && numberIsWhole // not ordinal if not whole
-            val groups = splitByModulus(numberLong, 1000)
-            val groupNames: MutableList<String?> = ArrayList()
-            for (i in groups.indices) {
-                val z: Long = groups[i]
-                if (z == 0L) {
-                    continue  // skip 000 groups
-                }
-                var groupName = subThousand(z, i == 0 && ordi)
-
-                if (i != 0) {
-                    val magnitude = longPow(1000, i)
-                    if (ordi) {
-                        // ordi can be true only for the first group (i.e. at the end of the number)
-                        if (z == 1L) {
-                            // remove "one" from first group (e.g. "one billion, millionth")
-                            groupName =
-                                EnglishFormatter.Companion.ORDINAL_NAMES_SHORT_SCALE[magnitude]
-                        } else {
-                            groupName += " " + EnglishFormatter.Companion.ORDINAL_NAMES_SHORT_SCALE[magnitude]
-                        }
-                    } else {
-                        groupName += " " + EnglishFormatter.Companion.NUMBER_NAMES_SHORT_SCALE[magnitude]
-                    }
-                }
-
-                groupNames.add(groupName)
-                ordi = false
-            }
-
-            appendSplitGroups(result, groupNames)
+        if (ordinal && numberIsWhole) {
+            result.append(ordinal(numberLong))
         } else {
-            var ordi = ordinal && numberIsWhole // not ordinal if not whole
-            val groups = splitByModulus(numberLong, 1000000)
-            val groupNames: MutableList<String?> = ArrayList()
-            for (i in groups.indices) {
-                val z: Long = groups[i]
-                if (z == 0L) {
-                    continue  // skip 000000 groups
-                }
-
-                var groupName: String?
-                if (z < 1000) {
-                    groupName = subThousand(z, i == 0 && ordi)
-                } else {
-                    groupName = subThousand(z / 1000, false) + " thousand"
-                    if (z % 1000 != 0L) {
-                        groupName += (if (i == 0) ", " else " ") + subThousand(
-                            z % 1000,
-                            i == 0 && ordi
-                        )
-                    } else if (i == 0 && ordi) {
-                        if (z / 1000 == 1L) {
-                            groupName = "thousandth" // remove "one" from "one thousandth"
-                        } else {
-                            groupName += "th"
-                        }
-                    }
-                }
-
-                if (i != 0) {
-                    val magnitude = longPow(1000000, i)
-                    if (ordi) {
-                        // ordi can be true only for the first group (i.e. at the end of the number)
-                        if (z == 1L) {
-                            // remove "one" from first group (e.g. "one billion, millionth")
-                            groupName =
-                                EnglishFormatter.Companion.ORDINAL_NAMES_LONG_SCALE[magnitude]
-                        } else {
-                            groupName += " " + EnglishFormatter.Companion.ORDINAL_NAMES_LONG_SCALE[magnitude]
-                        }
-                    } else {
-                        groupName += " " + EnglishFormatter.Companion.NUMBER_NAMES_LONG_SCALE[magnitude]
-                    }
-                }
-
-                groupNames.add(groupName)
-                ordi = false
-            }
-
-            appendSplitGroups(result, groupNames)
+            result.append(cardinal(numberLong, true))
         }
 
         if (realPlaces > 0) {
-            if (number < 1.0 && (result.isEmpty() || "minus ".contentEquals(result))) {
-                result.append("zero") // nothing was written before
-            }
-            result.append(" point")
-
-            val fractionalPart = String.format("%." + realPlaces + "f", number % 1)
-            for (i in 2..<fractionalPart.length) {
+            result.append(" komma")
+            val fractionalPart = String.format(Locale.ENGLISH, "%." + realPlaces + "f", positive % 1)
+            for (i in 2 until fractionalPart.length) {
                 result.append(" ")
-                result.append(NUMBER_NAMES[(fractionalPart[i].code - '0'.code).toLong()])
+                result.append(cardinal((fractionalPart[i].code - '0'.code).toLong(), true))
             }
         }
 
@@ -266,127 +116,182 @@ class GermanFormatter : Formatter("config/de-de") {
         use24Hour: Boolean,
         showAmPm: Boolean
     ): String {
-        if (speech) {
-            if (use24Hour) {
-                val result = StringBuilder()
-                if (time.hour < 10) {
-                    result.append("zero ")
-                }
-                result.append(pronounceNumberDuration(time.hour.toLong()))
-
-                result.append(" ")
-                if (time.minute == 0) {
-                    result.append("hundred")
-                } else {
-                    if (time.minute < 10) {
-                        result.append("zero ")
-                    }
-                    result.append(pronounceNumberDuration(time.minute.toLong()))
-                }
-
-                return result.toString()
-            } else {
-                if (time.hour == 0 && time.minute == 0) {
-                    return "midnight"
-                } else if (time.hour == 12 && time.minute == 0) {
-                    return "noon"
-                }
-
-                val normalizedHour = (time.hour + 11) % 12 + 1 // 1 to 12
-                val result = StringBuilder()
-                if (time.minute == 15) {
-                    result.append("quarter past ")
-                    result.append(pronounceNumberDuration(normalizedHour.toLong()))
-                } else if (time.minute == 30) {
-                    result.append("half past ")
-                    result.append(pronounceNumberDuration(normalizedHour.toLong()))
-                } else if (time.minute == 45) {
-                    result.append("quarter to ")
-                    result.append(pronounceNumberDuration((normalizedHour % 12 + 1).toLong()))
-                } else {
-                    result.append(pronounceNumberDuration(normalizedHour.toLong()))
-
-                    if (time.minute == 0) {
-                        if (!showAmPm) {
-                            return "$result o'clock"
-                        }
-                    } else {
-                        if (time.minute < 10) {
-                            result.append(" oh")
-                        }
-                        result.append(" ")
-                        result.append(pronounceNumberDuration(time.minute.toLong()))
-                    }
-                }
-
-                if (showAmPm) {
-                    result.append(if (time.hour >= 12) " p.m." else " a.m.")
-                }
-                return result.toString()
-            }
-        } else {
+        if (!speech) {
             return if (use24Hour) {
-                time.format(DateTimeFormatter.ofPattern("HH:mm", Locale.ENGLISH))
+                time.format(DateTimeFormatter.ofPattern("HH:mm", Locale.GERMAN))
             } else {
                 val result = time.format(
-                    DateTimeFormatter.ofPattern(
-                        if (showAmPm) "K:mm a" else "K:mm", Locale.ENGLISH
-                    )
+                    DateTimeFormatter.ofPattern(if (showAmPm) "K:mm a" else "K:mm", Locale.ENGLISH)
                 )
-                if (result.startsWith("0:")) {
-                    "12:" + result.substring(2)
-                } else {
-                    result
+                if (result.startsWith("0:")) "12:" + result.substring(2) else result
+            }
+        }
+
+        if (use24Hour) {
+            // e.g. dreizehn Uhr zweiundzwanzig, ein Uhr, null Uhr fünf
+            val result = StringBuilder(hourBeforeUhr(time.hour.toLong()))
+            result.append(" Uhr")
+            if (time.minute != 0) {
+                result.append(" ")
+                result.append(cardinal(time.minute.toLong(), true))
+            }
+            return result.toString()
+        }
+
+        if (time.hour == 0 && time.minute == 0) {
+            return "Mitternacht"
+        } else if (time.hour == 12 && time.minute == 0) {
+            return "zwölf Uhr mittags"
+        }
+
+        val hour = (time.hour + 11) % 12 + 1 // 1 to 12
+        val nextHour = hour % 12 + 1
+        val result = StringBuilder()
+        when (time.minute) {
+            0 -> result.append(hourBeforeUhr(hour.toLong())).append(" Uhr")
+            15 -> result.append("viertel nach ").append(cardinal(hour.toLong(), true))
+            30 -> result.append("halb ").append(cardinal(nextHour.toLong(), true))
+            45 -> result.append("viertel vor ").append(cardinal(nextHour.toLong(), true))
+            else -> result.append(hourBeforeUhr(hour.toLong())).append(" Uhr ")
+                .append(cardinal(time.minute.toLong(), true))
+        }
+
+        if (showAmPm) {
+            result.append(" ")
+            result.append(
+                when (time.hour) {
+                    in 5..9 -> "morgens"
+                    in 10..11 -> "vormittags"
+                    in 12..17 -> "nachmittags"
+                    in 18..21 -> "abends"
+                    else -> "nachts"
                 }
-            }
+            )
         }
+        return result.toString()
+    }
+
+    override fun pronounceNumberDuration(number: Long, unit: ChronoUnit): String {
+        if (number == 1L) {
+            // "ein Tag" (masculine), but "eine Stunde", "eine Minute", "eine Sekunde" (feminine)
+            return if (unit == ChronoUnit.DAYS) "ein" else "eine"
+        }
+        return pronounceNumberDuration(number)
     }
 
 
-    /**
-     * @param n must be 0 <= n <= 999
-     * @param ordinal whether to return an ordinal number (usually with -th)
-     * @return the string representation of a number smaller than 1000
-     */
-    private fun subThousand(n: Long, ordinal: Boolean): String? {
-        // this function calls itself inside if branches to make sure `ordinal` is respected
-        if (ordinal && ORDINAL_NAMES.containsKey(n)) {
-            return ORDINAL_NAMES[n]
-        } else if (n < 100) {
-            if (!ordinal && NUMBER_NAMES.containsKey(n)) {
-                return NUMBER_NAMES[n]
-            }
+    /** "ein Uhr" instead of "eins Uhr" */
+    private fun hourBeforeUhr(hour: Long): String {
+        return if (hour == 1L) "ein" else cardinal(hour, true)
+    }
 
-            // n is surely => 20 from here on, since all n < 20 are in (ORDINAL|NUMBER)_NAMES
-            return (NUMBER_NAMES[n - n % 10]
-                    + (if (n % 10 > 0) " " + subThousand(n % 10, ordinal) else ""))
-        } else {
-            return (NUMBER_NAMES[n / 100] + " hundred"
-                    + (if (n % 100 > 0)
-                " and " + subThousand(n % 100, ordinal)
-            else
-                (if (ordinal) "th" else "")))
-        }
+    /** e.g. 3 -> "Drittel", 20 -> "Zwanzigstel", 1000000 -> "Millionstel" */
+    private fun denominatorName(denominator: Long): String {
+        return (ordinal(denominator) + "l").replaceFirstChar { it.uppercaseChar() }
     }
 
     /**
-     * @param result the string builder to append the comma-separated group names to
-     * @param groupNames the group names
+     * @param n the non-negative number to pronounce
+     * @param isFinal whether nothing follows the number, so that 1 at the end is "eins" (e.g.
+     * "hunderteins") instead of "ein" (e.g. "einhundert", "ein Uhr")
+     * @return the cardinal number, e.g. "zwei Millionen dreihunderttausendvierzig"
      */
-    private fun appendSplitGroups(result: StringBuilder, groupNames: MutableList<String?>) {
-        if (!groupNames.isEmpty()) {
-            result.append(groupNames[groupNames.size - 1])
+    private fun cardinal(n: Long, isFinal: Boolean): String {
+        if (n == 0L) {
+            return "null"
         }
 
-        for (i in groupNames.size - 2 downTo 0) {
-            result.append(", ")
-            result.append(groupNames[i])
+        val groups = splitByModulus(n, 1000) // groups[0] = units, groups[1] = thousands, ...
+        val bigParts = ArrayList<String>() // million and above, separate words
+        for (i in groups.size - 1 downTo 2) {
+            val group = groups[i]
+            if (group == 0L) {
+                continue
+            }
+            val (singular, plural) = BIG_NUMBER_NAMES[i]
+            bigParts.add(
+                if (group == 1L) "eine $singular"
+                else subThousand(group, false) + " " + plural
+            )
         }
+
+        // below one million everything is a single word
+        val smallPart = StringBuilder()
+        if (groups.size > 1 && groups[1] != 0L) {
+            smallPart.append(if (groups[1] == 1L) "ein" else subThousand(groups[1], false))
+            smallPart.append("tausend")
+        }
+        if (groups[0] != 0L) {
+            smallPart.append(subThousand(groups[0], isFinal))
+        }
+
+        if (smallPart.isNotEmpty()) {
+            bigParts.add(smallPart.toString())
+        }
+        return bigParts.joinToString(" ")
+    }
+
+    /**
+     * @param n must be 0 < n <= 999
+     */
+    private fun subThousand(n: Long, isFinal: Boolean): String {
+        val result = StringBuilder()
+        val hundreds = n / 100
+        val rest = n % 100
+        if (hundreds > 0) {
+            result.append(if (hundreds == 1L) "ein" else NUMBER_NAMES[hundreds])
+            result.append("hundert")
+        }
+
+        if (rest == 1L) {
+            result.append(if (isFinal) "eins" else "ein")
+        } else if (rest in 2..19) {
+            result.append(NUMBER_NAMES[rest])
+        } else if (rest >= 20) {
+            val units = rest % 10
+            if (units != 0L) {
+                // e.g. dreiundzwanzig
+                result.append(if (units == 1L) "ein" else NUMBER_NAMES[units])
+                result.append("und")
+            }
+            result.append(NUMBER_NAMES[rest - units])
+        }
+        return result.toString()
+    }
+
+    /**
+     * @param n the non-negative number to pronounce as ordinal
+     * @return e.g. "dritte", "einundzwanzigste", "hundertzweite", "zweimillionste"
+     */
+    private fun ordinal(n: Long): String {
+        ORDINAL_NAMES[n]?.let { return it }
+
+        val lastTwoDigits = n % 100
+        if (lastTwoDigits in 1..19) {
+            // e.g. hundertzweite, tausendelfte
+            val prefix = cardinal(n - lastTwoDigits, false)
+            val separator = if ((n - lastTwoDigits) % 1000000 == 0L) " " else ""
+            return prefix + separator + ORDINAL_NAMES[lastTwoDigits]
+        }
+
+        val groups = splitByModulus(n, 1000)
+        if (groups.size > 2 && groups[0] == 0L && groups[1] == 0L) {
+            // ends with a round million, milliard, ...: the last group becomes one word with the
+            // singular, e.g. zweimillionste, zwei Milliarden dreimillionste
+            val lowest = groups.indexOfFirst { it != 0L }
+            val group = groups[lowest]
+            val higher = n - group * BIG_NUMBER_VALUES[lowest]
+            return (if (higher == 0L) "" else cardinal(higher, false) + " ") +
+                    (if (group == 1L) "" else subThousand(group, false)) +
+                    BIG_NUMBER_NAMES[lowest].first.lowercase() + "ste"
+        }
+
+        // e.g. zwanzigste, einundzwanzigste, hundertste, dreitausendste
+        return cardinal(n, false) + "ste"
     }
 
     companion object {
-        val NUMBER_NAMES = mapOf(
-            0L to "null",
+        private val NUMBER_NAMES = mapOf(
             1L to "eins",
             2L to "zwei",
             3L to "drei",
@@ -414,16 +319,10 @@ class GermanFormatter : Formatter("config/de-de") {
             70L to "siebzig",
             80L to "achtzig",
             90L to "neunzig",
-            100L to "hundert",
-            1000L to "tausend",
-            1000000L to "million",
-            1000000000L to "milliarde",
-            1000000000000L to "billion",
-            1000000000000000L to "billiarde",
-            1000000000000000000L to "trillion",
         )
 
-        val ORDINAL_NAMES = mapOf(
+        private val ORDINAL_NAMES = mapOf(
+            0L to "nullte",
             1L to "erste",
             2L to "zweite",
             3L to "dritte",
@@ -443,21 +342,24 @@ class GermanFormatter : Formatter("config/de-de") {
             17L to "siebzehnte",
             18L to "achtzehnte",
             19L to "neunzehnte",
-            20L to "zwanzigste",
-            30L to "dreißigste",
-            40L to "vierzigste",
-            50L to "fünfzigste",
-            60L to "sechzigste",
-            70L to "siebzigste",
-            80L to "achtzigste",
-            90L to "neunzigste",
             100L to "hundertste",
             1000L to "tausendste",
-            1000000L to "millionste",
-            1000000000L to "milliardste",
-            1000000000000L to "billionste",
-            1000000000000000L to "billiardste",
-            1000000000000000000L to "trilliardste",
+        )
+
+        private val BIG_NUMBER_VALUES = listOf(
+            1L, 1000L, 1000000L, 1000000000L, 1000000000000L, 1000000000000000L,
+            1000000000000000000L,
+        )
+
+        /** singular and plural name of 1000^i, only for i >= 2 */
+        private val BIG_NUMBER_NAMES = listOf(
+            Pair("", ""),
+            Pair("", ""),
+            Pair("Million", "Millionen"),
+            Pair("Milliarde", "Milliarden"),
+            Pair("Billion", "Billionen"),
+            Pair("Billiarde", "Billiarden"),
+            Pair("Trillion", "Trillionen"),
         )
     }
 }
