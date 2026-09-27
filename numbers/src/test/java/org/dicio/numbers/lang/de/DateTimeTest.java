@@ -24,7 +24,7 @@ public class DateTimeTest extends DateTimeTestBase {
     @Test
     public void testNiceDate() {
         // just check that the NumberParserFormatter functions do their job
-        assertEquals("Mittwoch, der achtundzwangzigste April zweitausendeinundzwanzig",
+        assertEquals("Mittwoch, der achtundzwanzigste April zweitausendeinundzwanzig",
                 pf.niceDate(LocalDate.of(2021, 4, 28)).get());
         assertEquals("Sonntag, der dreizehnte August",
                 pf.niceDate(LocalDate.of(-84, 8, 13)).now(LocalDate.of(-84, 8, 23)).get());
@@ -34,13 +34,13 @@ public class DateTimeTest extends DateTimeTestBase {
     public void testNiceYear() {
         // just check that the NumberParserFormatter functions do their job
         assertEquals("neunzehnhundertvierundachtzig", pf.niceYear(LocalDate.of(1984, 4, 28)).get());
-        assertEquals("achhundertzehn v.d.Z.", pf.niceYear(LocalDate.of(-810, 8, 13)).get());
+        assertEquals("achthundertzehn v. Chr.", pf.niceYear(LocalDate.of(-810, 8, 13)).get());
     }
 
     @Test
     public void testNiceDateTime() {
         // just check that the NumberParserFormatter functions do their job
-        assertEquals("Mittwoch, zwölfter September siebzehnhundertvierundsechzig, um zwölf Uhr mittags", pf.niceDateTime(LocalDateTime.of(1764, 9, 12, 12, 0)).get());
-        assertEquals("Donnerstag, dritter November dreihundertachtundzwanzig v.d.Z. um fünf Uhr sieben", pf.niceDateTime(LocalDateTime.of(-328, 11, 3, 5, 7)).get());
+        assertEquals("Mittwoch, der zwölfte September siebzehnhundertvierundsechzig um zwölf Uhr mittags", pf.niceDateTime(LocalDateTime.of(1764, 9, 12, 12, 0)).get());
+        assertEquals("Donnerstag, der dritte November dreihundertachtundzwanzig v. Chr. um fünf Uhr sieben", pf.niceDateTime(LocalDateTime.of(-328, 11, 3, 5, 7)).get());
     }
 }
