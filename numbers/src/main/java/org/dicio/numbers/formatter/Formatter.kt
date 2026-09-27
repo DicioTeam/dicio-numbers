@@ -8,6 +8,7 @@ import org.dicio.numbers.util.Utils
 import java.time.LocalDate
 import java.time.LocalTime
 import java.time.Period
+import java.time.temporal.ChronoUnit
 import kotlin.math.abs
 
 abstract class Formatter protected constructor(configFolder: String) {
@@ -192,7 +193,7 @@ abstract class Formatter protected constructor(configFolder: String) {
         val result = StringBuilder()
         if (speech) {
             if (days > 0) {
-                result.append(pronounceNumberDuration(days))
+                result.append(pronounceNumberDuration(days, ChronoUnit.DAYS))
                 result.append(" ")
                 result.append(if (days == 1L) config.dayWord else config.daysWord)
             }
@@ -201,7 +202,7 @@ abstract class Formatter protected constructor(configFolder: String) {
                 if (result.isNotEmpty()) {
                     result.append(" ")
                 }
-                result.append(pronounceNumberDuration(hours))
+                result.append(pronounceNumberDuration(hours, ChronoUnit.HOURS))
                 result.append(" ")
                 result.append(if (hours == 1L) config.hourWord else config.hoursWord)
             }
@@ -210,7 +211,7 @@ abstract class Formatter protected constructor(configFolder: String) {
                 if (result.isNotEmpty()) {
                     result.append(" ")
                 }
-                result.append(pronounceNumberDuration(minutes))
+                result.append(pronounceNumberDuration(minutes, ChronoUnit.MINUTES))
                 result.append(" ")
                 result.append(if (minutes == 1L) config.minuteWord else config.minutesWord)
             }
@@ -220,7 +221,7 @@ abstract class Formatter protected constructor(configFolder: String) {
                 if (result.isNotEmpty()) {
                     result.append(" ")
                 }
-                result.append(pronounceNumberDuration(seconds))
+                result.append(pronounceNumberDuration(seconds, ChronoUnit.SECONDS))
                 result.append(" ")
                 result.append(if (seconds == 1L) config.secondWord else config.secondsWord)
             }
@@ -248,6 +249,15 @@ abstract class Formatter protected constructor(configFolder: String) {
         }
 
         return result.toString()
+    }
+
+    /**
+     * Pronounces the amount of a unit in a duration, e.g. "twelve" in "twelve days". Languages in
+     * which the number word depends on the unit can override this, e.g. German "ein Tag" but
+     * "eine Stunde".
+     */
+    protected open fun pronounceNumberDuration(number: Long, unit: ChronoUnit): String {
+        return pronounceNumberDuration(number)
     }
 
     protected open fun pronounceNumberDuration(number: Long): String {
