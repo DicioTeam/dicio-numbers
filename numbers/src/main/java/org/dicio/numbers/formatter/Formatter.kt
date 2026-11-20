@@ -69,7 +69,7 @@ abstract class Formatter protected constructor(configFolder: String) {
      * Yesterday, today and tomorrow translations are also used.
      * @return the formatted date string
      */
-    fun niceDate(date: LocalDate, now: LocalDate?): String {
+    open fun niceDate(date: LocalDate, now: LocalDate?): String {
         var formatString = config.dateFormatFull
         if (now != null) {
             // try to remove redundant information based on the current date
@@ -106,7 +106,7 @@ abstract class Formatter protected constructor(configFolder: String) {
      * @param date the date containing the year to format (assumes already in local timezone)
      * @return the formatted year string
      */
-    fun niceYear(date: LocalDate): String {
+    open fun niceYear(date: LocalDate): String {
         val substitutionTable = NiceYearSubstitutionTableBuilder.build(config, date.year)
         val year = abs(date.year.toDouble()).toInt()
 
@@ -182,7 +182,7 @@ abstract class Formatter protected constructor(configFolder: String) {
      * @param speech format for speech (true) or display (false)
      * @return the formatted time span string
      */
-    fun niceDuration(duration: Duration, speech: Boolean): String {
+    open fun niceDuration(duration: Duration, speech: Boolean): String {
         val javaDuration = duration.toJavaDuration()
         val days = javaDuration.toDays()
         val hours = javaDuration.toHours() % 24
